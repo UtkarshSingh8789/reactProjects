@@ -1,4 +1,4 @@
-import conf from '../conf.js'
+import conf from '../conf/conf.js'
 import { Client, Account, ID } from "appwrite";
 
 // const client = new Client()
@@ -36,10 +36,11 @@ export class AuthService{
     //now wewill create a account;
     async craeteAccount({email,password,name}){
         try {
-            const userAccount=await this.account.create(ID.unique(),emai,password,name)//sbse phle unique id generate krna hoga kyuki documenation me diya hai funcction me sbse phle unique id generate krenge
+            const userAccount=await this.account.create(ID.unique(),email,password,name)//sbse phle unique id generate krna hoga kyuki documenation me diya hai funcction me sbse phle unique id generate krenge
             if(userAccount){
                 //agr userAccount exists krta hai toh directly login krwadenge
-                //hence call another method lofin;
+                //hence call another method login;
+                return this.login({email,password})
             }
             else{
                 return userAccount;

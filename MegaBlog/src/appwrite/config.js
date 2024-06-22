@@ -1,4 +1,4 @@
-import conf from '../conf.js'
+import conf from '../conf/conf.js'
 import {Client,ID,Databases,Storage,Query} from "appwrite"
 export class Service{
     client=new Client()
@@ -44,12 +44,85 @@ export class Service{
                     content,
                     featuredImage,
                     status,
-                }
+               }
             )
         } catch (error) {
             throw error
         }
     }
+    async deletePost(slug){
+        try {
+            await this.databases.deleteDocument(
+                conf.appwriteDatabaseId,
+                conf.appwriteCollectionId,
+                slug
+            )
+            return true;
+        } catch (error) {
+            throw error;
+            return false
+        }
+    }
+    //hoskta hai humlog ko ek particular post chaiye ho aur hoskta hai sare post chaiye
+    //phle ek post kaise lete hai ushka functionality dekhte hai;
+    async getPost(slug){
+        try {
+            return await this.databases.getDocument(
+                conf.appwriteDatabaseId,
+                conf.appwriteCollectionId,
+                slug
+            )
+        } catch (error) {
+            throw error
+            return false
+        }
+    }
+    //ab humko sare document chaiye  listdocument ka use krenge to databases me jitne bhi post honge sare post miljayenge
+    //sare post agr lunga to we bhi post aajayenge jishka status active nhi hai hence humlog ko ye nhi chaiye 
+    //iske liye humlog query lgana sikhenge;
+    async getPosts(/*mujhe we sare query do jishka staus active ho;*/queries=[Query.equal("status","active")]){
+        //queries ek variable hai (Query me key value pair dete hai)
+        try {
+            return await this.databases.listDocuments(
+                conf.appwriteDatabaseId,
+                conf.appwriteCollectionId,
+                queries,
+            )
+        } catch (error) {
+            throw error
+            return false
+        }
+    }
+    async uploadFile(file){
+        try {
+            return await this.bucket.createFile(
+                conf.appwriteBucketId,
+                ID.unique(),
+                file
+            )
+        } catch (error) {
+            throw error
+            return false
+        }
+    }
+    async deleteFile(fileId){
+        try {
+            await this.bucket.deleteFile(
+                conf.appwriteBucketId,
+                fileId
+            )
+            return true;
+        } catch (error) {
+            throw error
+        }
+    }
+    getFilePreview(fileId){
+        return this.bucket.getFilePreview(
+            conf.appwriteBucketId,
+            fileId
+        )
+    }
+
 }
 const service=new Service()
 export default service
