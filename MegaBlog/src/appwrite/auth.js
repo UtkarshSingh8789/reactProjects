@@ -34,7 +34,7 @@ export class AuthService{
         this.account=new Account(this.client)
     }
     //now wewill create a account;
-    async craeteAccount({email,password,name}){
+    async createAccount({email,password,name}){
         try {
             const userAccount=await this.account.create(ID.unique(),email,password,name)//sbse phle unique id generate krna hoga kyuki documenation me diya hai funcction me sbse phle unique id generate krenge
             if(userAccount){
