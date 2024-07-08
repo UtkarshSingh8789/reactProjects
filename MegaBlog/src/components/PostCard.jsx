@@ -1,4 +1,4 @@
-//jb humlog logid in honge toh humlog ko ek cards  millega hence jaise hi us card pe click krte hai humlog ko sara article mil rha tha pdhne ke liye;
+//jb humlog logid in honge toh humlog ko  cards  millega hence jaise hi us card pe click krte hai humlog ko sara article mil rha tha pdhne ke liye;
 //hence we card bhi apne aap me ek component hai;
 import React from 'react'
 import appwriteService from "../appwrite/config"
@@ -7,13 +7,13 @@ import { Link } from 'react-router-dom'
 //ye jo props de rhe hai PostCard ko we humlog ko seedah seddha mil jayega jb bhi query lgayenge toh appwrite se miljayega;
 function PostCard({
     //id yha $id krke likha jaata ye appwrite ka syntax hai;
-    $id,title,featuredImage
+    $id,title,featuredimage
 }) {
   return (
     <Link to={`/post/${$id}`}>
         <div className='w-full bg-gray-100 rounded-xl p-4'>
             <div className='w-full justify-center mb-4'>
-                <img src={appwriteService.getFilePreview(featuredImage)} alt={title} 
+                <img src={appwriteService.getFilePreview(featuredimage)} alt={title} 
                 className='rounded-xl'/>
             </div>
             <h2 className='text-xl font-bold'>{title}</h2>

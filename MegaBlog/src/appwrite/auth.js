@@ -51,19 +51,21 @@ export class AuthService{
     }
     async login({email,password}){
         try {
-            return await this.account.createEmailPasswordSession(email,password)
+            return await this.account.createEmailPasswordSession(email, password);
         } catch (error) {
             throw error
         }
         //agr account nhi milla hoga toh ye null return krdega;
     }
     //agr mein directly home pe aagya toh humko pta krna hoga ki mein login hm ya nhi ho;
-    async getCurrentUser(){
+    async getCurrentUser() {
         try {
-            await this.account.get() 
+            return await this.account.get();
         } catch (error) {
-            throw error
+            console.log("Appwrite serive :: getCurrentUser :: error", error);
         }
+
+        return null;
     }
     async logout(){
         try {

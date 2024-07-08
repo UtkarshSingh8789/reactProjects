@@ -12,27 +12,28 @@ export class Service{
         this.databases=new Databases(this.client);
         this.bucket=new Storage(this.client);
     }
-    async createPost({title,slug,content,featuredImage,status,userId}){
+    async createPost({title, slug, content, featuredimage, status, userId}){
         try {
+            if (!featuredimage) {
+                throw new Error("featuredImage is required");
+            }
             return await this.databases.createDocument(
                 conf.appwriteDatabaseId,
                 conf.appwriteCollectionId,
-                //ab bola documentation me ki docume id dene ke liye toh humlog kya krte hai jo bhi slug value denge ushko document id ke jgh use krlenge;
                 slug,
                 {
                     title,
                     content,
-                    featuredImage,
+                    featuredimage,
                     status,
                     userId,
                 }
             )
-            
         } catch (error) {
-            throw error;
+            console.log("Appwrite serive :: createPost :: error", error);
         }
     }
-    async updatePost(slug,{title,content,featuredImage,status}){//kn sa document id ko update krna hai ushko separate lelete hai
+    async updatePost(slug,{title,content,featuredimage,status}){//kn sa document id ko update krna hai ushko separate lelete hai
         //dekho humlog user id nhi denge chahte hai ki jo user bnaya hai whi update kr ske;
         try {
             return await this.databases.updateDocument(
@@ -42,12 +43,12 @@ export class Service{
                 {
                     title,
                     content,
-                    featuredImage,
+                    featuredimage,
                     status,
                }
             )
         } catch (error) {
-            throw error
+            console.log("Appwrite serive :: updatePost :: error", error);
         }
     }
     async deletePost(slug){
@@ -59,7 +60,7 @@ export class Service{
             )
             return true;
         } catch (error) {
-            throw error;
+            console.log("Appwrite serive :: deletePost :: error", error);
             return false
         }
     }
@@ -73,7 +74,7 @@ export class Service{
                 slug
             )
         } catch (error) {
-            throw error
+            console.log("Appwrite serive :: getPost :: error", error);
             return false
         }
     }
@@ -89,7 +90,7 @@ export class Service{
                 queries,
             )
         } catch (error) {
-            throw error
+            console.log("Appwrite serive :: getPosts :: error", error);
             return false
         }
     }
@@ -101,7 +102,7 @@ export class Service{
                 file
             )
         } catch (error) {
-            throw error
+            console.log("Appwrite serive :: uploadFile :: error", error);
             return false
         }
     }
@@ -113,7 +114,8 @@ export class Service{
             )
             return true;
         } catch (error) {
-            throw error
+            console.log("Appwrite serive :: deleteFile :: error", error);
+            return false
         }
     }
     getFilePreview(fileId){

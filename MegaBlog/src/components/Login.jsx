@@ -16,14 +16,19 @@ function Login() {
     try {
       const session=await authService.login(data);
       //agr session hai toh kuch krenge agr nhi hai toh kuch krenge;
-      if(session){
+      // if(session){
+      //   const userData = await authService.getCurrentUser()
+      //   if(userData){
+      //     dispatch(authLogin(userData))
+      //     //ab agr useryha aachuka hai mtlb login ho chuka hai toh ishko yha rkhna hi kyu hai ushko bhj do
+      //     //link se bhjenge toh click krna parega jha jaana hai isliye navigate ka use krenge jaise hi use login hoga automaticall phuch jaayega;
+      //     navigate("/")
+      //   }
+      // }
+      if (session) {
         const userData = await authService.getCurrentUser()
-        if(userData){
-          dispatch(authLogin(userData))
-          //ab agr useryha aachuka hai mtlb login ho chuka hai toh ishko yha rkhna hi kyu hai ushko bhj do
-          //link se bhjenge toh click krna parega jha jaana hai isliye navigate ka use krenge jaise hi use login hoga automaticall phuch jaayega;
-          navigate("/")
-        }
+        if(userData) dispatch(authLogin(userData));
+        navigate("/")
       }
     } catch (error) {
       setError(error.message)

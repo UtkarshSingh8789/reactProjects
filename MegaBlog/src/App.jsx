@@ -4,6 +4,7 @@ import './App.css'
 import authService from './appwrite/auth'
 import {login,logout} from './store/authSlice'
 import { Footer, Header } from './components'
+import { Outlet } from 'react-router-dom'
 function App() {
   // console.log(process.env.REACT_APP_APPWRITE_URL)
   // istrh access lete hai jb create react ka use kr rhe hai toh but in vite;
@@ -32,7 +33,7 @@ function App() {
     <div className='min-h-screen flex flex-wrap content-between bg-gray-400'>
       <div className='w-full block'>
         <Header/>
-        {/* outlet denge */}
+        {/* outlet denge */}<Outlet/>
         <Footer/>
       </div>
     </div>

@@ -14,7 +14,7 @@ function Select({
         className={`px-3 py-2 rounded-lg bg-white text-black outline-none focus:bg-gray-50 duration-200 border border-gray-200 w-full ${className}`}>
             {/* options ek aarray hoti hai loop lgane se phle check krlenge ki empty toh nhi agr empty me loop lga denge toh system crash kr jayega*/}
             {options?.map((option)=>(
-                <option key={option} value={option}></option>
+                <option key={option} value={option}>{option}</option>
             ))}
         </select>
     </div>
